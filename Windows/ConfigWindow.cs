@@ -500,7 +500,9 @@ internal sealed class ConfigWindow : Window, IDisposable
                 if (texture.TryGetWrap(out var wrap, out _) && wrap is not null)
                 {
                     ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, new Vector2(4f * ImGuiHelpers.GlobalScale, 4f * ImGuiHelpers.GlobalScale));
+                    ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 5f * ImGuiHelpers.GlobalScale);
                     var clicked = ImGui.ImageButton(wrap.Handle, new Vector2(size, size));
+                    ImGui.PopStyleVar();
                     ImGui.PopStyleVar();
                     return clicked;
                 }

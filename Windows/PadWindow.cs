@@ -137,7 +137,7 @@ internal sealed class PadWindow : Window, IDisposable
                     var padding = 1f * ImGuiHelpers.GlobalScale;
                     var innerMin = pos + new Vector2(padding, padding);
                     var innerMax = end - new Vector2(padding, padding);
-                    drawList.AddImage(wrap.Handle, innerMin, innerMax);
+                    drawList.AddImageRounded(wrap.Handle, innerMin, innerMax, Vector2.Zero, Vector2.One, uint.MaxValue, 5f * ImGuiHelpers.GlobalScale);
                 }
             }
             catch (Exception ex)
