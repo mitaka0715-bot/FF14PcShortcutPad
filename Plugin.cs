@@ -126,7 +126,7 @@ public sealed class Plugin : IDalamudPlugin
 
         foreach (var line in lines)
         {
-            var text = Configuration.NormalizeCommand(line);
+            var text = line.Trim();
             ExecuteGameCommand(text);
             SetStatus($"送信: {text}");
         }

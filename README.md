@@ -9,6 +9,7 @@ FF14 PC Shortcut Pad is a Dalamud plugin that adds a compact 4x4 in-game shortcu
 - Configurable next/previous page shortcuts
 - Configurable per-button shortcut keys
 - Supports FF14 chat commands such as `/ac` and `/hotbar`
+- Sends plain chat text when a command line does not start with `/`
 - Selects PNG/JPG/WEBP icons from a user-provided icon folder
 - Adjustable icon size, button spacing, and main window background alpha
 - Japanese settings UI
@@ -23,6 +24,16 @@ FF14 PC Shortcut Pad is a Dalamud plugin that adds a compact 4x4 in-game shortcu
 ## Icons
 
 This repository does not include official FF14 icon assets. Use a separate icon extraction tool or your own images, then set the generated `icons` folder in the plugin settings.
+
+## Command Text
+
+Lines starting with `/` are sent as FF14/Dalamud commands.
+Lines without `/` are sent as normal chat text.
+
+```text
+/p よろしくお願いします
+よろしくお願いします
+```
 
 ## Dalamud Repo Test
 
