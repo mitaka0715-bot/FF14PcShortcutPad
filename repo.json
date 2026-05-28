@@ -3,7 +3,7 @@
     "Author": "General Headquarters",
     "Name": "FF14 PC Shortcut Pad",
     "InternalName": "FF14PcShortcutPadDalamud",
-    "AssemblyVersion": "0.1.3.0",
+    "AssemblyVersion": "0.1.4.0",
     "TestingAssemblyVersion": null,
     "Description": "A Dalamud in-game shortcut pad with 10 saved pages, 4x4 icon buttons, editable shortcuts, commands, icon paths, and Japanese settings UI.",
     "Punchline": "4x4 in-game shortcut pad for commands and page helpers.",
@@ -17,7 +17,7 @@
     "DownloadLinkTesting": "https://raw.githubusercontent.com/mitaka0715-bot/FF14PcShortcutPad/main/latest.zip",
     "IconUrl": "https://raw.githubusercontent.com/mitaka0715-bot/FF14PcShortcutPad/main/icon.png",
     "ImageUrls": null,
-    "LastUpdate": "1779965350"
+    "LastUpdate": "1779997961"
   }
 ]
 
