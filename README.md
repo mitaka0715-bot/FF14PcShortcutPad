@@ -42,7 +42,7 @@ Lines starting with `/` are sent as FF14 or Dalamud commands. Lines without `/` 
 ## Notes About Chat Commands
 
 - `/p` and `/party` work when you are in a party. If you are not in a party, FF14 may not show the same error behavior as manual chat input.
-- Plain text without `/` is sent as `/say <text>`.
+- Plain text without `/` is sent as `/say TEXT`.
 - Other plugin commands are useful shortcuts: for example, set a button to `/cammy` or `/vbm` to open those plugins directly.
 
 ## Dalamud Repo
