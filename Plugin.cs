@@ -23,6 +23,7 @@ public sealed class Plugin : IDalamudPlugin
     [PluginService] internal static ICommandManager CommandManager { get; private set; } = null!;
     [PluginService] internal static IFramework Framework { get; private set; } = null!;
     [PluginService] internal static IKeyState KeyState { get; private set; } = null!;
+    [PluginService] internal static IClientState ClientState { get; private set; } = null!;
     [PluginService] internal static ITextureProvider TextureProvider { get; private set; } = null!;
     [PluginService] internal static IPluginLog Log { get; private set; } = null!;
 
@@ -56,6 +57,7 @@ public sealed class Plugin : IDalamudPlugin
 
     internal string LastStatus { get; private set; } = string.Empty;
     internal bool ShouldShowStatus => DateTime.UtcNow < statusUntil && !string.IsNullOrWhiteSpace(LastStatus);
+    private static bool IsInPlayableArea => ClientState.IsLoggedIn && ClientState.TerritoryType != 0;
 
     public Plugin()
     {
@@ -70,18 +72,17 @@ public sealed class Plugin : IDalamudPlugin
         RegisterMainCommand();
 
         Framework.Update += OnFrameworkUpdate;
-        PluginInterface.UiBuilder.Draw += WindowSystem.Draw;
+        PluginInterface.UiBuilder.Draw += DrawWindows;
         PluginInterface.UiBuilder.OpenMainUi += ToggleMainUi;
         PluginInterface.UiBuilder.OpenConfigUi += ToggleConfigUi;
     }
 
     public void Dispose()
     {
-        Configuration.MainWindowVisible = padWindow.IsOpen;
         Configuration.ConfigWindowVisible = configWindow.IsOpen;
         Configuration.Save();
 
-        PluginInterface.UiBuilder.Draw -= WindowSystem.Draw;
+        PluginInterface.UiBuilder.Draw -= DrawWindows;
         PluginInterface.UiBuilder.OpenMainUi -= ToggleMainUi;
         PluginInterface.UiBuilder.OpenConfigUi -= ToggleConfigUi;
         Framework.Update -= OnFrameworkUpdate;
@@ -94,8 +95,8 @@ public sealed class Plugin : IDalamudPlugin
 
     internal void ToggleMainUi()
     {
-        padWindow.Toggle();
-        Configuration.MainWindowVisible = padWindow.IsOpen;
+        Configuration.MainWindowVisible = !Configuration.MainWindowVisible;
+        padWindow.IsOpen = Configuration.MainWindowVisible && IsInPlayableArea;
         Configuration.Save();
     }
 
@@ -109,6 +110,12 @@ public sealed class Plugin : IDalamudPlugin
     internal void RefreshMainCommand()
     {
         RegisterMainCommand();
+    }
+
+    private void DrawWindows()
+    {
+        padWindow.IsOpen = Configuration.MainWindowVisible && IsInPlayableArea;
+        WindowSystem.Draw();
     }
 
     internal unsafe void ExecuteCommand(string command)
@@ -134,6 +141,12 @@ public sealed class Plugin : IDalamudPlugin
 
     private void OnFrameworkUpdate(IFramework framework)
     {
+        if (!IsInPlayableArea)
+        {
+            pressedKeys.Clear();
+            return;
+        }
+
         var hasNextKey = TryShortcutToBinding(Configuration.PageNextShortcut, out var nextKey);
         var hasPreviousKey = TryShortcutToBinding(Configuration.PagePreviousShortcut, out var previousKey);
 
