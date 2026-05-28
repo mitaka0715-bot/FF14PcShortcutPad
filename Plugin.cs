@@ -46,7 +46,6 @@ public sealed class Plugin : IDalamudPlugin
     private const int VkRightControl = 0xA3;
     private const int VkLeftMenu = 0xA4;
     private const int VkRightMenu = 0xA5;
-
     private readonly struct ShortcutBinding(VirtualKey key, bool ctrl, bool alt, bool shift)
     {
         public VirtualKey Key { get; } = key;
@@ -118,7 +117,7 @@ public sealed class Plugin : IDalamudPlugin
         WindowSystem.Draw();
     }
 
-    internal unsafe void ExecuteCommand(string command)
+    internal void ExecuteCommand(string command)
     {
         if (string.IsNullOrWhiteSpace(command))
         {
@@ -134,9 +133,63 @@ public sealed class Plugin : IDalamudPlugin
         foreach (var line in lines)
         {
             var text = line.Trim();
-            ExecuteGameCommand(text);
+            if (!TryExecutePluginCommand(text))
+            {
+                ExecuteGameCommand(ToGameCommand(text));
+            }
             SetStatus($"送信: {text}");
         }
+    }
+
+    private static string ToGameCommand(string text)
+    {
+        if (!text.StartsWith("/", StringComparison.Ordinal))
+        {
+            return "/say " + text;
+        }
+
+        return text;
+    }
+
+    private static bool TryExecutePluginCommand(string text)
+    {
+        if (!text.StartsWith("/", StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        if (IsGameChatCommand(text))
+        {
+            return false;
+        }
+
+        try
+        {
+            return CommandManager.ProcessCommand(text);
+        }
+        catch (Exception ex)
+        {
+            Log.Warning(ex, "Failed to process plugin command: {Command}", text);
+            return false;
+        }
+    }
+
+    private static bool IsGameChatCommand(string text)
+    {
+        var command = text.Split(' ', 2, StringSplitOptions.TrimEntries)[0].ToLowerInvariant();
+        return command is
+            "/p" or "/party" or
+            "/s" or "/say" or
+            "/y" or "/yell" or
+            "/sh" or "/shout" or
+            "/fc" or "/freecompany" or
+            "/a" or "/alliance" or
+            "/l1" or "/l2" or "/l3" or "/l4" or "/l5" or "/l6" or "/l7" or "/l8" or
+            "/linkshell1" or "/linkshell2" or "/linkshell3" or "/linkshell4" or
+            "/linkshell5" or "/linkshell6" or "/linkshell7" or "/linkshell8" or
+            "/cwl1" or "/cwl2" or "/cwl3" or "/cwl4" or "/cwl5" or "/cwl6" or "/cwl7" or "/cwl8" or
+            "/cwlinkshell1" or "/cwlinkshell2" or "/cwlinkshell3" or "/cwlinkshell4" or
+            "/cwlinkshell5" or "/cwlinkshell6" or "/cwlinkshell7" or "/cwlinkshell8";
     }
 
     private void OnFrameworkUpdate(IFramework framework)
@@ -213,6 +266,22 @@ public sealed class Plugin : IDalamudPlugin
         }
 
         using var text = new Utf8String(command);
+        text.SanitizeString(
+            AllowedEntities.Unknown9 |
+            AllowedEntities.Payloads |
+            AllowedEntities.OtherCharacters |
+            AllowedEntities.SpecialCharacters |
+            AllowedEntities.Numbers |
+            AllowedEntities.LowercaseLetters |
+            AllowedEntities.UppercaseLetters |
+            AllowedEntities.CJK);
+
+        if (text.Length > 500)
+        {
+            Log.Warning("Command was too long: {Command}", command);
+            return;
+        }
+
         shell->ExecuteCommandInner(&text, uiModule);
     }
 

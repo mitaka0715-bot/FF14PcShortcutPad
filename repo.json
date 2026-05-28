@@ -1,27 +1,22 @@
-﻿[
-  {
-    "Author": "General Headquarters",
-    "Name": "FF14 PC Shortcut Pad",
-    "InternalName": "FF14PcShortcutPadDalamud",
-    "AssemblyVersion": "0.1.5.0",
-    "TestingAssemblyVersion": null,
-    "Description": "A Dalamud in-game shortcut pad with 10 saved pages, 4x4 icon buttons, editable shortcuts, commands, icon paths, and Japanese settings UI.",
-    "Punchline": "4x4 in-game shortcut pad for commands and page helpers.",
-    "RepoUrl": "https://github.com/mitaka0715-bot/FF14PcShortcutPad",
-    "ApplicableVersion": "any",
-    "DalamudApiLevel": 15,
-    "IsHide": false,
-    "IsTestingExclusive": false,
-    "DownloadLinkInstall": "https://raw.githubusercontent.com/mitaka0715-bot/FF14PcShortcutPad/main/latest.zip",
-    "DownloadLinkUpdate": "https://raw.githubusercontent.com/mitaka0715-bot/FF14PcShortcutPad/main/latest.zip",
-    "DownloadLinkTesting": "https://raw.githubusercontent.com/mitaka0715-bot/FF14PcShortcutPad/main/latest.zip",
-    "IconUrl": "https://raw.githubusercontent.com/mitaka0715-bot/FF14PcShortcutPad/main/icon.png",
-    "ImageUrls": null,
-    "LastUpdate": "1779998100"
-  }
+[
+    {
+        "Author":  "General Headquarters",
+        "Name":  "FF14 PC Shortcut Pad",
+        "InternalName":  "FF14PcShortcutPadDalamud",
+        "AssemblyVersion":  "0.1.12.0",
+        "TestingAssemblyVersion":  null,
+        "Description":  "A Dalamud in-game shortcut pad with 10 saved pages, 4x4 icon buttons, editable labels, FF14 commands, other plugin commands, icon paths, and Japanese settings UI.",
+        "Punchline":  "4x4 in-game shortcut pad for FF14 and plugin commands.",
+        "RepoUrl":  "https://github.com/mitaka0715-bot/FF14PcShortcutPad",
+        "ApplicableVersion":  "any",
+        "DalamudApiLevel":  15,
+        "IsHide":  false,
+        "IsTestingExclusive":  false,
+        "DownloadLinkInstall":  "https://raw.githubusercontent.com/mitaka0715-bot/FF14PcShortcutPad/main/latest.zip",
+        "DownloadLinkUpdate":  "https://raw.githubusercontent.com/mitaka0715-bot/FF14PcShortcutPad/main/latest.zip",
+        "DownloadLinkTesting":  "https://raw.githubusercontent.com/mitaka0715-bot/FF14PcShortcutPad/main/latest.zip",
+        "IconUrl":  "https://raw.githubusercontent.com/mitaka0715-bot/FF14PcShortcutPad/main/icon.png",
+        "ImageUrls":  null,
+        "LastUpdate":  "1779969925"
+    }
 ]
-
-
-
-
-
